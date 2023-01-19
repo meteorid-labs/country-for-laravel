@@ -26,6 +26,9 @@ class CountryDetail extends Model
         'labels' => 'array',
         'formats' => 'array',
         'meta' => 'array',
+        'building_number_required' => 'boolean',
+        'building_number_maybe_in_lineTwo' => 'boolean',
+        'postcode_required' => 'boolean',
     ];
 
     /**
