@@ -14,5 +14,19 @@ class ImportCommandTest extends TestCase
         $this->assertDatabaseHas(Negara::country(), [
             'name' => 'Indonesia',
         ]);
+
+        $country = Negara::country()->where('name', 'Indonesia')->first();
+
+        $this->assertDatabaseHas(Negara::state(), [
+            'country_id' => $country->id,
+        ]);
+
+        $this->assertDatabaseHas(Negara::countryCurrency(), [
+            'country_id' => $country->id,
+        ]);
+
+        $this->assertDatabaseHas(Negara::countryDetail(), [
+            'country_id' => $country->id,
+        ]);
     }
 }
