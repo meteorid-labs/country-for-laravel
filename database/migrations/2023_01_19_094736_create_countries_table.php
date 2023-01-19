@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('iso3')->unique();
             $table->string('iso2')->unique()->nullable();
             $table->string('phonecode');
+            $table->string('currency')->nullable();
             $table->string('capital')->nullable();
             $table->string('native')->nullable();
             $table->string('emoji');
