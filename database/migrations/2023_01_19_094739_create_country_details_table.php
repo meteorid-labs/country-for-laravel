@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create($this->prefix.'country_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->constrained($this->prefix.'countries')->onDelete('cascade');
             $table->string('tld')->nullable();
             $table->string('region')->nullable();
             $table->string('subregion')->nullable();

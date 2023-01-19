@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create($this->prefix.'states', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->constrained($this->prefix.'countries')->onDelete('cascade');
             $table->string('name');
             $table->string('code');
             $table->decimal('latitude', 10, 8)->nullable();
