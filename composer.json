@@ -1,8 +1,16 @@
 {
     "name": "meteor/country",
     "description": "Meteor countries",
-    "type": "library",
+    "keywords": [
+        "laravel",
+        "country",
+        "countries"
+    ],
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/meteorid-labs/laravel-country/issues",
+        "source": "https://github.com/meteorid-labs/laravel-country"
+    },
     "authors": [
         {
             "name": "Aslam H",
