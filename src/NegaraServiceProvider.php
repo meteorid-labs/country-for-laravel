@@ -57,7 +57,7 @@ class NegaraServiceProvider extends ServiceProvider
             ], 'meteor.country.migrations');
 
             $this->publishes([
-                __DIR__.'/../config/country.php' => config_path('neteor/country.php'),
+                __DIR__.'/../config/country.php' => config_path('meteor/country.php'),
             ], 'meteor.country.config');
         }
     }
