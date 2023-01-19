@@ -1,28 +1,23 @@
-name: tests
+name: Country tests
 
 on:
   push:
   pull_request:
-  schedule:
-    - cron: "0 0 * * *"
 
 jobs:
-  tests:
-    runs-on: ubuntu-22.04
+  run:
+    runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
       matrix:
         php: ["8.0", 8.1, 8.2]
-        laravel: [9, 10]
-        exclude:
-          - php: "8.0"
-            laravel: 10
+        laravel: [8, 9]
+        phpunit-version: ["latest"]
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup PHP
@@ -34,9 +29,21 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Install dependencies
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-
+
+      - name: Install Composer dependencies
         run: |
-          composer require "illuminate/contracts=^${{ matrix.laravel }}" --no-update
-          composer update --prefer-dist --no-interaction --no-progress
-      - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --dev
+          composer update --prefer-stable --no-interaction --no-suggest
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: vendor/bin/phpunit
