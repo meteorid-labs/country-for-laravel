@@ -38,7 +38,7 @@ class ImportCommand extends Command
         DB::transaction(function () use ($countries) {
             $this->withProgressBar($countries, function ($data) {
                 $country = Negara::country()->create(
-                    Arr::except($data, ['states', 'currency', 'detail']) + ['currency' => $data['currency']['code']]
+                    Arr::except($data, ['states', 'currency', 'detail'])
                 );
 
                 $country->currency()->create($data['currency']);
